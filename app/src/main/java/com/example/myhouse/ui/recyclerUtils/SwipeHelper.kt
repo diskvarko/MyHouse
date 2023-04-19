@@ -133,7 +133,8 @@ abstract class SwipeHelper(
         private val context: Context,
         @ColorRes private val colorRes: Int,
         private val clickListener: UnderlayButtonClickListener,
-        val image: Drawable
+        private val padding: Float,
+        private val image: Drawable
     ) {
         private var clickableRegion: RectF? = null
         private val horizontalPadding = 50.0f
@@ -152,7 +153,7 @@ abstract class SwipeHelper(
             canvas.drawRect(rect, paint)
 
             val titleBounds = Rect()
-            val y = rect.height() / 2 + titleBounds.height() / 2 - 20.0f
+            val y = rect.height() / 2 + titleBounds.height() / 2 - padding
             canvas.drawBitmap(image.toBitmap(), rect.left + horizontalPadding, rect.top + y, paint)
 
             clickableRegion = rect

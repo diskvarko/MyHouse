@@ -15,7 +15,6 @@ class DoorsViewHolder(
     private val background: ImageView = view.findViewById(R.id.imageViewDoors)
     private val name: TextView = view.findViewById(R.id.doorsName)
 
-
     fun bind(door: DoorsModel) {
         background.load(door.snapshot)
         name.text = door.name

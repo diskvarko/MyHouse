@@ -4,13 +4,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myhouse.asLiveData
-import com.example.myhouse.data.database.CameraEntity
+import com.example.myhouse.data.database.mapToCameraEntity
 import com.example.myhouse.data.database.mapToCameraModel
 import com.example.myhouse.domain.cameras.IGetCamerasFromDBUseCase
 import com.example.myhouse.domain.cameras.IGetCamerasUseCase
 import com.example.myhouse.domain.cameras.ISetCamerasUseCase
-import com.example.myhouse.domain.common.TResult
 import com.example.myhouse.domain.cameras.ISetFavoriteCamerasItemUseCase
+import com.example.myhouse.domain.common.TResult
 import com.example.myhouse.domain.entity.CameraModel
 import kotlinx.coroutines.launch
 
@@ -79,10 +79,11 @@ class CamerasListViewModel(
         }
     }
 
-    fun onFavoriteClick(entity: CameraEntity) {
+    fun onFavoriteClick(position: Int) {
+        val entity = camerasList.value?.get(position)?.mapToCameraEntity()
+        entity?.favorites = !entity?.favorites!!
         viewModelScope.launch {
             setFavoriteItemUseCase.setFavorite(entity)
         }
-        updateDataBaseList()
     }
 }

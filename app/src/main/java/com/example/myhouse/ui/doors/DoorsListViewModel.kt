@@ -4,13 +4,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myhouse.asLiveData
-import com.example.myhouse.data.database.DoorsEntity
-import com.example.myhouse.data.database.mapToCameraModel
+import com.example.myhouse.data.database.mapToDoorsEntity
 import com.example.myhouse.data.database.mapToDoorsModel
 import com.example.myhouse.domain.common.TResult
 import com.example.myhouse.domain.doors.*
-import com.example.myhouse.domain.entity.CameraModel
 import com.example.myhouse.domain.entity.DoorsModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class DoorsListViewModel(
@@ -50,7 +49,6 @@ class DoorsListViewModel(
     fun updateList() {
         viewModelScope.launch {
             val result = getDoorsUseCase.getDoorsList()
-            //add loader
             when (result) {
                 is TResult.Success -> {
                     val list = mutableListOf<DoorsModel>()
@@ -63,13 +61,14 @@ class DoorsListViewModel(
                     _closeLoadingRefresh.value = Unit
                 }
                 is TResult.Error -> {
+                    _closeLoadingRefresh.value = Unit
                     _isLoading.value = false
                 }
             }
         }
     }
 
-    fun updateDataBaseList() {
+    private fun updateDataBaseList() {
         viewModelScope.launch {
             val list = getDoorsFromDBUseCase.getAll()
             val results = mutableListOf<DoorsModel>()
@@ -80,16 +79,21 @@ class DoorsListViewModel(
         }
     }
 
-    fun onFavoriteClick(entity: DoorsEntity) {
+    fun onFavoriteClick(position: Int) {
+        val entity = doorsList.value?.get(position)?.mapToDoorsEntity()
+        entity?.favorites = !entity?.favorites!!
         viewModelScope.launch {
             setFavoriteItemUseCase.setFavorite(entity)
         }
         updateDataBaseList()
     }
 
-    fun editName(entity: DoorsEntity) {
+    fun editName(position : Int, name: String) {
+        val entity = doorsList.value?.get(position)?.mapToDoorsEntity()
+        entity?.name = name
         viewModelScope.launch {
-            updateNameUseCase.setName(entity)
+            entity?.let { updateNameUseCase.setName(it) }
+            delay(10000)
         }
         updateDataBaseList()
     }
