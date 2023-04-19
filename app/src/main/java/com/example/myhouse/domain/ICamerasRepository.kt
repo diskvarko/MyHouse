@@ -1,4 +1,4 @@
-package com.example.myhouse.data
+package com.example.myhouse.domain
 
 import com.example.myhouse.data.database.CameraEntity
 import com.example.myhouse.domain.common.TResult

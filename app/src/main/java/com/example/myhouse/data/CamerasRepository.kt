@@ -4,6 +4,7 @@ import com.example.myhouse.data.beans.camera.mapToCameraModel
 import com.example.myhouse.data.database.CameraEntity
 import com.example.myhouse.data.database.mapToCameraEntity
 import com.example.myhouse.data.network.NetworkApi
+import com.example.myhouse.domain.ICamerasRepository
 import com.example.myhouse.domain.common.TResult
 import com.example.myhouse.domain.entity.CameraModel
 import io.realm.kotlin.Realm
@@ -11,7 +12,6 @@ import io.realm.kotlin.UpdatePolicy
 import io.realm.kotlin.ext.query
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 

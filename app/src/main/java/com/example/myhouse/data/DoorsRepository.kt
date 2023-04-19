@@ -3,6 +3,7 @@ package com.example.myhouse.data
 import com.example.myhouse.data.database.DoorsEntity
 import com.example.myhouse.data.database.mapToDoorsEntity
 import com.example.myhouse.data.network.NetworkApi
+import com.example.myhouse.domain.IDoorsRepository
 import com.example.myhouse.domain.common.TResult
 import com.example.myhouse.domain.entity.DoorsModel
 import com.example.myhouse.domain.entity.mapToDoorsModel

@@ -32,7 +32,6 @@ class CamerasListFragment : Fragment(R.layout.fragment_list) {
                 return buttons
             }
         })
-
         itemTouchHelper.attachToRecyclerView(binding.recyclerView)
         viewModel.camerasList.observe(viewLifecycleOwner) {
             (binding.recyclerView.adapter as CamerasAdapter).setList(it)
