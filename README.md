@@ -10,7 +10,5 @@ Used technologies:
 - XML UI + Material Design
 
 
-![Screenshot_20230420_012804](https://user-images.githubusercontent.com/65858995/233214305-2294de70-e040-4bb0-80ad-76c805441283.png)
-![Screenshot_20230420_012737](https://user-images.githubusercontent.com/65858995/233214313-6ec08716-7a10-4136-81c1-8062e7257425.png)
-![Screen![Screenshot_20230420_013354](https://user-images.githubusercontent.com/65858995/233214331-28580f0f-f691-4491-9d58-b45f6fc3eaca.png)
-shot_20230420_013403](https://user-images.githubusercontent.com/65858995/233214322-8cb3e5f0-1d3f-435c-b7c3-a35f8c372875.png)
+<img width="1264" alt="1" src="https://user-images.githubusercontent.com/65858995/233214911-e4f8068e-79b5-4756-8b27-dd905adc74cc.png">
+
