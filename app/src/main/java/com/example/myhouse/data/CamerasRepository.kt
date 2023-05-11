@@ -10,16 +10,13 @@ import com.example.myhouse.domain.entity.CameraModel
 import io.realm.kotlin.Realm
 import io.realm.kotlin.UpdatePolicy
 import io.realm.kotlin.ext.query
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
 class CamerasRepository(
     private val networkApi: NetworkApi,
-    private val realm: Realm,
-    private val applicationScope: CoroutineScope
+    private val realm: Realm
 ) : ICamerasRepository {
 
     override suspend fun getCameras(): TResult<List<CameraModel>> = withContext(Dispatchers.IO) {
@@ -36,11 +33,9 @@ class CamerasRepository(
     }
 
     override suspend fun insert(cameras: List<CameraModel>) {
-        applicationScope.launch(Dispatchers.IO) {
-            realm.write {
-                cameras.forEach {
-                    copyToRealm(it.mapToCameraEntity(), updatePolicy = UpdatePolicy.ALL)
-                }
+        realm.write {
+            cameras.forEach {
+                copyToRealm(it.mapToCameraEntity(), updatePolicy = UpdatePolicy.ALL)
             }
         }
     }
@@ -50,12 +45,10 @@ class CamerasRepository(
 
 
     override suspend fun setFavorite(entity: CameraEntity) {
-        applicationScope.launch(Dispatchers.IO) {
-            realm.write {
-                val item: CameraEntity? =
-                    query<CameraEntity>("id == $0", entity.id).first().find()
-                item?.favorites = entity.favorites
-            }
+        realm.write {
+            val item: CameraEntity? =
+                query<CameraEntity>("id == $0", entity.id).first().find()
+            item?.favorites = entity.favorites
         }
     }
 

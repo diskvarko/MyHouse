@@ -84,8 +84,8 @@ class DoorsListViewModel(
         entity?.favorites = !entity?.favorites!!
         viewModelScope.launch {
             setFavoriteItemUseCase.setFavorite(entity)
+            updateDataBaseList()
         }
-        updateDataBaseList()
     }
 
     fun editName(position : Int, name: String) {
@@ -93,8 +93,7 @@ class DoorsListViewModel(
         entity?.name = name
         viewModelScope.launch {
             entity?.let { updateNameUseCase.setName(it) }
-            delay(10000)
+            updateDataBaseList()
         }
-        updateDataBaseList()
     }
 }

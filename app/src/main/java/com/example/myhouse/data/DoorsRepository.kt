@@ -10,15 +10,12 @@ import com.example.myhouse.domain.entity.mapToDoorsModel
 import io.realm.kotlin.Realm
 import io.realm.kotlin.UpdatePolicy
 import io.realm.kotlin.ext.query
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class DoorsRepository(
     private val networkApi: NetworkApi,
-    private val realm: Realm,
-    private val applicationScope: CoroutineScope
+    private val realm: Realm
 ) : IDoorsRepository {
 
     override suspend fun getDoorsList(): TResult<List<DoorsModel>> = withContext(Dispatchers.IO) {
@@ -35,11 +32,9 @@ class DoorsRepository(
     }
 
     override suspend fun insert(door: List<DoorsModel>) {
-        applicationScope.launch(Dispatchers.IO) {
-            realm.write {
-                door.forEach {
-                    copyToRealm(it.mapToDoorsEntity(), updatePolicy = UpdatePolicy.ALL)
-                }
+        realm.write {
+            door.forEach {
+                copyToRealm(it.mapToDoorsEntity(), updatePolicy = UpdatePolicy.ALL)
             }
         }
     }
@@ -49,22 +44,18 @@ class DoorsRepository(
     }
 
     override suspend fun setFavorite(entity: DoorsEntity) {
-       applicationScope.launch(Dispatchers.IO) {
-           realm.write {
-                   val item: DoorsEntity? =
-                       query<DoorsEntity>("id == $0", entity.id).first().find()
-                   item?.favorites = entity.favorites
-           }
-       }
+        realm.write {
+            val item: DoorsEntity? =
+                query<DoorsEntity>("id == $0", entity.id).first().find()
+            item?.favorites = entity.favorites
+        }
     }
 
     override suspend fun updateName(entity: DoorsEntity) {
-        applicationScope.launch(Dispatchers.IO) {
-            realm.write {
-                val item: DoorsEntity? =
-                    query<DoorsEntity>("id == $0", entity.id).first().find()
-                item?.name = entity.name
-            }
+        realm.write {
+            val item: DoorsEntity? =
+                query<DoorsEntity>("id == $0", entity.id).first().find()
+            item?.name = entity.name
         }
     }
 

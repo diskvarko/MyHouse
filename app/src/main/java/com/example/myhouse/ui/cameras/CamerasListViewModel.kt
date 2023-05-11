@@ -84,6 +84,7 @@ class CamerasListViewModel(
         entity?.favorites = !entity?.favorites!!
         viewModelScope.launch {
             setFavoriteItemUseCase.setFavorite(entity)
+            updateDataBaseList()
         }
     }
 }
